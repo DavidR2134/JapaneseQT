@@ -1,8 +1,8 @@
 import sys
 import random
-from PyQt5.QtWidgets import QApplication, QMessageBox, QMainWindow, QLabel, QPushButton, QGridLayout, QWidget, QAction, QLineEdit
-from PyQt5.QtCore import QTimer, Qt, pyqtSlot
-from PyQt5.QtGui import QIcon, QFont
+from PyQt5.QtWidgets import QApplication, QMessageBox, QMainWindow, QLabel, QPushButton, QGridLayout, QWidget, QLineEdit
+from PyQt5.QtCore import Qt, pyqtSlot
+from PyQt5.QtGui import QFont
 
 #Global Variables
 HIRAGANA = ['わ','ら','や','ま','は','な','た','さ','か','あ','り','み','ひ','に','ち','し','き','い'
@@ -45,6 +45,7 @@ class JapaneseLesson(QMainWindow):
         self.japanese_label.setFont(QFont('Arial', 24))
         self.japanese_label.setAlignment(Qt.AlignCenter)
 
+        #Track Correct and Incorrect scores
         self.correct_label = QLabel("Correct: " + str(self.correct), self)
         self.correct_label.setFont(QFont('Arial', 12))
         
@@ -80,6 +81,7 @@ class JapaneseLesson(QMainWindow):
     def on_click(self):
         textboxValue = self.textbox.text()
         
+        #Check user input
         if textboxValue.lower() == self.sounds[self.index]:    
             self.japanese_label.setStyleSheet("background-color: lightgreen; border: 1px solid black;")
             QMessageBox.question(self, 'Correct!', "You're Right!", QMessageBox.Ok)
@@ -104,10 +106,9 @@ class JapaneseLesson(QMainWindow):
 
         self.update_labels()
 
-        print(f"Correct: {self.correct}\nIncorrect: {self.incorrect}\nCounter: {self.counter}")
-
 
     def change_character(self):
+        #Update Japanese character after each round, decide if new character will be Hiragana or Katakana
         character_set = random.randint(0,1)
         self.index = random.randint(0, len(self.hiragana) - 1)
         
